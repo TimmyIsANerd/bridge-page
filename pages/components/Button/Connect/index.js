@@ -14,17 +14,25 @@ const ConnectButton = styled.button`
     position: relative;
     z-index: 1;
     overflow: hidden;
-    animation: all .3s ease;
-    padding:0 10px;
+    padding:${(props) => props.padding || "0 18px"};
+    transition:0.5s;
     :hover{
         cursor:pointer;
+        background-color: ${(props) => props.hoverBackgroundColor || "#4500a0"};
     }
 `
 
-const Button = ({title}) =>{
+const Button = ({title,height,backgroundColor,color,hoverBackgroundColor}) =>{
     return(
         <>
-            <ConnectButton>{title ? title : 'Connect Wallet'}</ConnectButton>
+            <ConnectButton
+                height={height}
+                backgroundColor={backgroundColor}
+                color={color}
+                hoverBackgroundColor={hoverBackgroundColor}
+            >
+                {title ? title : 'Connect Wallet'}
+            </ConnectButton>
         </>
     )
 }
