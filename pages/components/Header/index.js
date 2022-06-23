@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-    width:700px;
+    width:100%;
+    margin:0 10px;
+    text-align:center;
 `
 
 const Heading = styled.h2`
