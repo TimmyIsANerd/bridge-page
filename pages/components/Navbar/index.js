@@ -80,7 +80,6 @@ const Menu = styled.div`
 `;
 
 const Navbar = () => {
-
   const [toggle, setToggle] = useState(false);
 
   function flipToggle(){
@@ -112,6 +111,7 @@ const Navbar = () => {
               backgroundColor="rgba(255,255,255,.5) !important"
               color="#000"
               hoverBackgroundColor="rgba(255,255,255,.8) !important"
+              
             />
           </ConnectButtonContainer>
         </NavColumn>
