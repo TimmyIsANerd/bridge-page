@@ -80,7 +80,7 @@ const Navbar = () => {
 
   const [toggle, setToggle] = useState(false);
 
-  function toggle(){
+  function flipToggle(){
     setToggle(!toggle);
   }
 
