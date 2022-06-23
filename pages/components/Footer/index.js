@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 const FooterContainer = styled.div`
-  position: absolute;
-  bottom: 0;
   width: 100%;
   background-color: #101010;
   height: 40vh;
