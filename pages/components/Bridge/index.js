@@ -47,7 +47,7 @@ const Bridge = () => {
         <FormContainer>
           <Form>
             <FormGroup>
-              <label for="amount">Amount</label>
+              <label htmlFor="amount">Amount</label>
               <AmountInput type="number" id="amount" />
             </FormGroup>
           </Form>
