@@ -28,9 +28,14 @@ const FormContainer = styled.div``;
 
 const Form = styled.form``;
 
-const FormGroup = styled.div``;
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin:0.5rem 0;
+`;
 
-const TextInput = styled.input``;
+const AmountInput = styled.input`
+`;
 
 const Bridge = () => {
   return (
@@ -40,7 +45,12 @@ const Bridge = () => {
         <hr />
 
         <FormContainer>
-          <Form></Form>
+          <Form>
+            <FormGroup>
+              <label for="amount">Amount</label>
+              <AmountInput type="number" id="amount" />
+            </FormGroup>
+          </Form>
         </FormContainer>
         <ButtonContainer>
           <Button />
