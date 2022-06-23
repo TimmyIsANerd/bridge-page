@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import Image from "next/image";
 import { IoMdNotifications } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -76,13 +77,20 @@ const Menu = styled.div`
 `;
 
 const Navbar = () => {
+
+  const [toggle, setToggle] = useState(false);
+
+  function toggle(){
+    setToggle(!toggle);
+  }
+
   return (
     <>
       <NavbarContainer>
         <NavLogo>
           <Image src="/logo.svg" width={106} height={30} />
         </NavLogo>
-        <NavColumn>
+        <NavColumn className={toggle ? "show_nav" : "hide"}>
           <NavLinkContainer>
             <ul>
               <li>Wallet</li>
