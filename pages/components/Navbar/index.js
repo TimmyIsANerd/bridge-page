@@ -74,6 +74,9 @@ const Menu = styled.div`
   :hover {
     cursor: pointer;
   }
+  @media (max-width: 480px) {
+    display: block;
+  }
 `;
 
 const Navbar = () => {
@@ -108,7 +111,7 @@ const Navbar = () => {
               height="36px !important"
               backgroundColor="rgba(255,255,255,.5) !important"
               color="#000"
-              hoverBackgroundColor="rgba(255,255,255,.3) !important"
+              hoverBackgroundColor="rgba(255,255,255,.8) !important"
             />
           </ConnectButtonContainer>
         </NavColumn>
