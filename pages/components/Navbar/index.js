@@ -14,6 +14,12 @@ const NavbarContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  .show_nav{
+    display:block;
+  }
+  .hide{
+    display:none;
+  }
 `;
 
 const NavLogo = styled.div``;
@@ -27,6 +33,7 @@ const NavLinkContainer = styled.div`
   }
   li {
     padding: 5px 15px;
+    text-align:center;
   }
   li:hover {
     cursor: pointer;
@@ -35,6 +42,14 @@ const NavLinkContainer = styled.div`
     background-color: #101010;
     color: #fff;
     border-radius: 30px;
+  }
+  @media (max-width: 480px) {
+    ul {
+      flex-direction: column;
+      align-items: center;
+      row-gap:1rem;
+      margin-left: -2.5rem;
+    }
   }
 `;
 
@@ -57,7 +72,18 @@ const NavColumn = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   @media (max-width: 480px) {
-    display: none;
+    // display: none;
+    border-radius: 10px;
+    background-color: #fff;
+    position: absolute;
+    top: 0%;
+    left:0;
+    width: 60%;
+    height: 100%;
+    z-index:999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -66,6 +92,11 @@ const ConnectButtonContainer = styled.div`
   flex-direction: row;
   align-items: center;
   column-gap: 1rem;
+  @media (max-width: 480px) {
+    // display: none;
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 
 const Menu = styled.div`
@@ -80,8 +111,9 @@ const Menu = styled.div`
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
+  console.log(toggle);
 
-  function flipToggle(){
+  function flipToggle() {
     setToggle(!toggle);
   }
 
@@ -113,7 +145,7 @@ const Navbar = () => {
             />
           </ConnectButtonContainer>
         </NavColumn>
-        <Menu>
+        <Menu onClick={flipToggle}>
           <GiHamburgerMenu size={25} padding="0 18px" fontSize="14px" />
         </Menu>
       </NavbarContainer>
