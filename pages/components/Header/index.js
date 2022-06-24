@@ -13,6 +13,8 @@ const Heading = styled.h2`
 
 const Text = styled.p`
     font-size:20px;
+    text-align:center;
+    padding:0 10px;
 `
 
 
