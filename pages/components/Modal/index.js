@@ -13,7 +13,7 @@ const ModalContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 9999;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   .show{
     display:block;
