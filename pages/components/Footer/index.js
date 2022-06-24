@@ -5,8 +5,14 @@ const FooterContainer = styled.div`
   background-color: #101010;
   height: 40vh;
   display: flex;
+  flex-direction:row;
+  @media (max-width: 768px) {
+    height:auto;
+    flex-direction: column;
+  }
   column-gap:3rem;
   justify-content:center;
+
 `;
 
 const FooterColumn = styled.div`
