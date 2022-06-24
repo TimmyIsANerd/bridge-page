@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../../../context/globalContext";
 import Button from "../Button/Connect";
+import Image from "next/image";
 
 const Container = styled.div`
   border-radius: 26px;
@@ -165,9 +166,51 @@ const Text = styled("p")`
   }
 `;
 
+const ConnectWalletDropdown = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height:50px;
+  z-index: 99;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const ConnectWalletOption = styled.div`
+  margin-top: 1rem;
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px #333;
+  border-radius: 12px;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  .show {
+    display: block;
+  }
+  .hide {
+    display: hide;
+  }
+`;
+
 const Bridge = () => {
   const [isError, setIsError] = useState(false);
-  const { walletConnected } = useContext(GlobalContext);
+  const [showConnectOption, setShowConnectOption] = useState(false);
+  const { walletConnected,showModalSwitch } = useContext(GlobalContext);
+
+  function showOption() {
+    setShowConnectOption(!showConnectOption); 
+  }
+
+  function handleModalSwitch() {
+    showModalSwitch();
+  }
 
   return (
     <>
@@ -221,12 +264,32 @@ const Bridge = () => {
                     value="0xF2255c5F4dd0a2dfC4B65bab08EE27CA58333362"
                   />
                 ) : (
-                  <AddressInput
-                    type="text"
-                    disabled
-                    id="address"
-                    placeholder="Connect Wallet First"
-                  />
+                  <>
+                    <ConnectWalletDropdown
+                      onClick={() => showOption()}
+                    >
+                      <AddressInput
+                        type="text"
+                        disabled
+                        id="address"
+                        placeholder="Connect Wallet First"
+                      />
+                      {showConnectOption ? (
+                        <>
+                          <ConnectWalletOption onClick={() => handleModalSwitch()}>
+                            <div>
+                              <Text>Connect Wallet</Text>
+                              <Image
+                                src="/metamask.svg"
+                                width={20}
+                                height={20}
+                              />
+                            </div>
+                          </ConnectWalletOption>
+                        </>
+                      ) : null}
+                    </ConnectWalletDropdown>
+                  </>
                 )}
               </InputWrap>
             </FormGroup>
