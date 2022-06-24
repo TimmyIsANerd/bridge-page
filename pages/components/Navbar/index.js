@@ -6,7 +6,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Button from "../Button/Connect";
 
 const NavbarContainer = styled.div`
-  position: sticky;
   max-width: 100%;
   height: 75px;
   padding: 1rem 0.8rem;
@@ -115,7 +114,7 @@ const Navbar = () => {
           </ConnectButtonContainer>
         </NavColumn>
         <Menu>
-          <GiHamburgerMenu color="#fff" size={25} padding="0 18px" fontSize="14px" />
+          <GiHamburgerMenu size={25} padding="0 18px" fontSize="14px" />
         </Menu>
       </NavbarContainer>
     </>
