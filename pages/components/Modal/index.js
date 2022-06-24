@@ -126,7 +126,7 @@ const Modal = () => {
               </WalletOption>
             </WalletMenu>
             <div className="wallet_option">
-              <Image src="/metamask.svg" height={20} width={20} />
+              <Image src="/trustwallet.svg" height={20} width={20} />
               <Text>Connect To Trust Wallet</Text>
             </div>
             <WalletMenu>
