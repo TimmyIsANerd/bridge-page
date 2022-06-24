@@ -11,11 +11,11 @@ const NavbarContainer = styled.div`
   padding: 1rem 0.8rem;
   background-color: ${(props) => props.backgroundColor};
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
   justify-content: space-between;
   align-items: center;
   .show_nav{
-    display:block;
+    display:flex;
   }
   .hide{
     display:none;
@@ -28,6 +28,7 @@ const NavLinkContainer = styled.div`
   ul {
     list-style: none;
     display: flex;
+    flex-direction:row;
     justify-content: space-between;
     column-gap: 1rem;
   }
@@ -72,7 +73,6 @@ const NavColumn = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   @media (max-width: 480px) {
-    // display: none;
     border-radius: 10px;
     background-color: #fff;
     position: absolute;
@@ -110,8 +110,7 @@ const Menu = styled.div`
 `;
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false);
-  console.log(toggle);
+  const [toggle, setToggle] = useState(true);
 
   function flipToggle() {
     setToggle(!toggle);
