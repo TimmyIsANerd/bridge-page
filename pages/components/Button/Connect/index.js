@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import { GlobalContext } from "../../../../context/globalContext";
 
 const ConnectButton = styled.button`
     width: 100%;
@@ -8,7 +10,7 @@ const ConnectButton = styled.button`
     border-radius: 9999px;
     outline: none !important;
     text-align: center;
-    font-size: ${(props) => props.fontSize || "14px"};
+    font-size: ${(props) => props.fontSize || "16px"};
     color: ${(props) => props.color || "#fff"};
     vertical-align: middle;
     position: relative;
@@ -22,7 +24,14 @@ const ConnectButton = styled.button`
     }
 `
 
-const Button = ({title,height,backgroundColor,color,hoverBackgroundColor}) =>{
+const Button = ({title,height,backgroundColor,color,hoverBackgroundColor,padding}) =>{
+
+    const {showModalSwitch} = useContext(GlobalContext);
+
+    function handleConnectClick(){
+        showModalSwitch(true);
+    }
+
     return(
         <>
             <ConnectButton
@@ -30,6 +39,8 @@ const Button = ({title,height,backgroundColor,color,hoverBackgroundColor}) =>{
                 backgroundColor={backgroundColor}
                 color={color}
                 hoverBackgroundColor={hoverBackgroundColor}
+                padding={padding}
+                onClick={handleConnectClick}
             >
                 {title ? title : 'Connect Wallet'}
             </ConnectButton>
