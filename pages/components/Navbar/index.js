@@ -111,12 +111,11 @@ const Navbar = () => {
               backgroundColor="rgba(255,255,255,.5) !important"
               color="#000"
               hoverBackgroundColor="rgba(255,255,255,.8) !important"
-              
             />
           </ConnectButtonContainer>
         </NavColumn>
         <Menu>
-          <GiHamburgerMenu color="#fff" size={25} />
+          <GiHamburgerMenu color="#fff" size={25} padding="0 18px" fontSize="14px" />
         </Menu>
       </NavbarContainer>
     </>
