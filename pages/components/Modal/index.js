@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState, useContext } from "react";
+import { GlobalContext } from "../../../context/globalContext";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const ModalContainer = styled.div`
@@ -13,6 +15,12 @@ const ModalContainer = styled.div`
   justify-content: center;
   z-index: 100;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  .show{
+    display:block;
+  }
+  .hide{
+    display:none;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -24,6 +32,10 @@ const ModalContent = styled.div`
   border-radius: 26px;
   background-color: #fff;
   padding: 1rem;
+
+  hr{
+    opacity:0.8;
+  }
 `;
 
 const ModalHeader = styled.div``;
@@ -43,7 +55,19 @@ const IconContainer = styled.div`
 
 const ModalBody = styled.div``;
 
+const WalletMenu = styled.div``;
+
+const WalletOption = styled.div``;
+
+
+
 const Modal = () => {
+  const {showModalSwitch} = useContext(GlobalContext);
+
+  function closeModal(){
+    showModalSwitch(false);
+  }
+
   return (
     <>
       <ModalContainer>
@@ -51,11 +75,17 @@ const Modal = () => {
           <ModalHeader>
             <ModalTitle>Connect Wallet</ModalTitle>
           </ModalHeader>
+          <hr />
           <IconContainer>
-            <AiOutlineCloseCircle size={20} />
+            <AiOutlineCloseCircle size={20}  onClick={() => closeModal()} />
           </IconContainer>
           <ModalBody>
-            <p>Connect your wallet to start trading</p>
+            <h3>Connect To Metamask</h3>
+            <WalletMenu>
+              <WalletOption>
+              
+              </WalletOption>
+            </WalletMenu>
           </ModalBody>
         </ModalContent>
       </ModalContainer>
