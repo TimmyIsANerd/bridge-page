@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Button from "../Button/Connect";
 
@@ -31,13 +32,41 @@ const Form = styled.form``;
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  margin:0.5rem 0;
+  margin: 0.5rem 0;
+  row-gap: 0.5rem;
 `;
 
+const LabelContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Balance = styled.div``;
+
+const InputWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 50px;
+`;
 const AmountInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(194, 201, 209, 0.5);
+  border-radius: 12px;
+  padding: 10px 25px;
+  background-color: #f5f7fb;
+`;
+
+const ErrorMsg = styled.p`
+  color: #e85151;
 `;
 
 const Bridge = () => {
+  const [isError, setIsError] = useState(false);
+
   return (
     <>
       <Container>
@@ -47,13 +76,22 @@ const Bridge = () => {
         <FormContainer>
           <Form>
             <FormGroup>
-              <label htmlFor="amount">Amount</label>
-              <AmountInput type="number" id="amount" />
+              <LabelContainer>
+                <label htmlFor="amount">Amount</label>
+                <Balance>Balance:--</Balance>
+              </LabelContainer>
+              <InputWrap>
+                <AmountInput type="number" id="amount" />
+              </InputWrap>
+              {isError ? <ErrorMsg>Error Message</ErrorMsg> : null}
             </FormGroup>
           </Form>
         </FormContainer>
         <ButtonContainer>
-          <Button />
+          <Button
+            height="60px"
+            padding="4px 16px"
+          />
         </ButtonContainer>
       </Container>
     </>
