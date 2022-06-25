@@ -125,7 +125,7 @@ const DropdownListContainer = styled.div`
   position: absolute;
   /* top: 10%; */
   margin-top: 1.5rem;
-  z-index: 999;
+  z-index: 5;
 `;
 
 const DropdownList = styled("ul")`
