@@ -173,7 +173,7 @@ const ConnectWalletDropdown = styled.div`
   align-items: center;
   width: 100%;
   height: 50px;
-  z-index: 99;
+  z-index: 5;
   :hover {
     cursor: pointer;
   }
