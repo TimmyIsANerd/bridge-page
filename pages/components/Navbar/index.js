@@ -133,7 +133,11 @@ const ConnectedText = styled.button`
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
-  const { walletConnected } = useContext(GlobalContext);
+  const { walletConnected,showDisconnectModalSwitch } = useContext(GlobalContext);
+
+  function handleDisconnectModal(){
+    showDisconnectModalSwitch(true);
+  }
 
   function flipToggle() {
     setToggle(!toggle);
@@ -166,6 +170,7 @@ const Navbar = () => {
                 backgroundColor="rgba(255,255,255,.5) !important"
                 color="#000"
                 hoverBackgroundColor="rgba(255,255,255,.8) !important"
+                onClick={() => handleDisconnectModal(true)}
               > Connected </ConnectedText>
             ) : (
               <Button
