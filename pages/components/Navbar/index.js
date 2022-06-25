@@ -147,7 +147,7 @@ const Navbar = () => {
     <>
       <NavbarContainer>
         <NavLogo>
-          <Image src="/logo.svg" width={106} height={30} />
+          <Image src="/logo.svg" width={106} height={30} alt="Brand Logo" />
         </NavLogo>
         <NavColumn className={toggle ? "show_nav" : "hide "}>
           <NavLinkContainer>
