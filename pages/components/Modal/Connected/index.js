@@ -113,7 +113,7 @@ const Connected = () => {
             <AiOutlineCloseCircle size={20} onClick={() => closeModal()} />
           </IconContainer>
           <ModalBody>
-            <Image src="/metamask.svg" width={75} height={75} />
+            <Image src="/metamask.svg" width={75} height={75} alt="Metamask Logo" />
             <DisconnectButton onClick={() => handleDisconnectModal()}>Log Out</DisconnectButton>
           </ModalBody>
         </ModalContent>
