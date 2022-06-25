@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../context/globalContext';
+import React, { useContext, useEffect } from "react";
+import { GlobalContext } from "../context/globalContext";
 import Bridge from "./components/Bridge";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Modal from "./components/Modal";
+import Connected from "./components/Modal/Connected";
 
 const BridgeContainer = styled.div`
   display: flex;
@@ -16,13 +17,27 @@ const BridgeContainer = styled.div`
 `;
 
 function Home() {
+  // const { ethereum } = window;
+  // const { walletConnected } = useContext(GlobalContext);
 
-  const {showModal} = useContext(GlobalContext);
+  // function CheckEthereum() {
+  //   if (ethereum) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // useEffect(() => {
+    
+  // }, []);
+  const { showModal, showDisconnectModal } = useContext(GlobalContext);
 
   return (
     <>
       <Navbar />
-      {showModal ? <Modal/> : null}
+      {showModal ? <Modal /> : null}
+      {showDisconnectModal ? <Connected /> : null}
       <BridgeContainer>
         <Header />
         <Bridge />
