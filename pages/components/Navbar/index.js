@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Image from "next/image";
 import { IoMdNotifications } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Button from "../Button/Connect";
+import { GlobalContext } from "../../../context/globalContext";
 
 const NavbarContainer = styled.div`
   max-width: 100%;
@@ -14,11 +15,13 @@ const NavbarContainer = styled.div`
   flex-direction: row !important;
   justify-content: space-between;
   align-items: center;
-  .show_nav{
-    display:flex;
-  }
-  .hide{
-    display:none;
+  @media (max-width: 480px) {
+    .show_nav {
+      display: flex;
+    }
+    .hide {
+      display: none;
+    }
   }
 `;
 
@@ -28,13 +31,13 @@ const NavLinkContainer = styled.div`
   ul {
     list-style: none;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     justify-content: space-between;
     column-gap: 1rem;
   }
   li {
     padding: 5px 15px;
-    text-align:center;
+    text-align: center;
   }
   li:hover {
     cursor: pointer;
@@ -48,7 +51,7 @@ const NavLinkContainer = styled.div`
     ul {
       flex-direction: column;
       align-items: center;
-      row-gap:1rem;
+      row-gap: 1rem;
       margin-left: -2.5rem;
     }
   }
@@ -73,14 +76,13 @@ const NavColumn = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   @media (max-width: 480px) {
-    border-radius: 10px;
+    border-radius: 0px;
     background-color: #fff;
     position: absolute;
     top: 0%;
-    left:0;
     width: 60%;
     height: 100%;
-    z-index:999;
+    z-index: 999;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -93,7 +95,6 @@ const ConnectButtonContainer = styled.div`
   align-items: center;
   column-gap: 1rem;
   @media (max-width: 480px) {
-    // display: none;
     justify-content: center;
     flex-direction: column;
   }
@@ -109,8 +110,30 @@ const Menu = styled.div`
   }
 `;
 
+const ConnectedText = styled.button`
+  width: 100%;
+  height: ${(props) => props.height || "40px"};
+  background-color: ${(props) => props.backgroundColor || "#101010"};
+  border: none !important;
+  border-radius: 9999px;
+  outline: none !important;
+  text-align: center;
+  font-size: ${(props) => props.fontSize || "16px"};
+  color: ${(props) => props.color || "#fff"};
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: ${(props) => props.padding || "0 18px"};
+  transition: 0.5s;
+  :hover {
+    cursor: pointer;
+    background-color: ${(props) => props.hoverBackgroundColor || "#4500a0"};
+  }
+`;
+
 const Navbar = () => {
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
+  const { walletConnected } = useContext(GlobalContext);
 
   function flipToggle() {
     setToggle(!toggle);
@@ -122,7 +145,7 @@ const Navbar = () => {
         <NavLogo>
           <Image src="/logo.svg" width={106} height={30} />
         </NavLogo>
-        <NavColumn className={toggle ? "show_nav" : "hide"}>
+        <NavColumn className={toggle ? "show_nav" : "hide "}>
           <NavLinkContainer>
             <ul>
               <li>Wallet</li>
@@ -136,12 +159,22 @@ const Navbar = () => {
             <NotificationContainer>
               <IoMdNotifications />
             </NotificationContainer>
-            <Button
-              height="36px !important"
-              backgroundColor="rgba(255,255,255,.5) !important"
-              color="#000"
-              hoverBackgroundColor="rgba(255,255,255,.8) !important"
-            />
+            {walletConnected ? (
+              <ConnectedText
+                title="Connected"
+                height="36px !important"
+                backgroundColor="rgba(255,255,255,.5) !important"
+                color="#000"
+                hoverBackgroundColor="rgba(255,255,255,.8) !important"
+              > Connected </ConnectedText>
+            ) : (
+              <Button
+                height="36px !important"
+                backgroundColor="rgba(255,255,255,.5) !important"
+                color="#000"
+                hoverBackgroundColor="rgba(255,255,255,.8) !important"
+              />
+            )}
           </ConnectButtonContainer>
         </NavColumn>
         <Menu onClick={flipToggle}>
