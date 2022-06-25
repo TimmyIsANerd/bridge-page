@@ -21,6 +21,7 @@ const Container = styled.div`
 
 const Heading = styled.h3`
   font-weight: 500;
+  font-size:25px;
 `;
 
 const ButtonContainer = styled.div`
@@ -219,10 +220,10 @@ const DepositBTN = styled.button`
     cursor: pointer;
     background-color: ${(props) => props.hoverBackgroundColor || "#4500a0"};
   }
-  :disabled{
-    background-color:grey;
+  :disabled {
+    background-color: grey;
   }
-`
+`;
 
 const Bridge = () => {
   const [isError, setIsError] = useState(false);
@@ -245,6 +246,32 @@ const Bridge = () => {
 
         <FormContainer>
           <Form>
+            <FormGroup>
+              <LabelContainer>
+                <label htmlFor="walletAddress">Your Address</label>
+              </LabelContainer>
+              <InputWrap>
+                {walletConnected ? (
+                  <>
+                    <AddressInput
+                      type="text"
+                      id="walletAddress"
+                      placeholder="Connect Wallet First"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <AddressInput
+                      type="text"
+                      id="walletAddress"
+                      placeholder="Enter Wallet Address"
+                      disabled
+                    />
+                  </>
+                )}
+              </InputWrap>
+              {isError ? <ErrorMsg>Error Message</ErrorMsg> : null}
+            </FormGroup>
             <FormGroup>
               <LabelContainer>
                 <label htmlFor="token">Token</label>
@@ -303,7 +330,7 @@ const Bridge = () => {
                             onClick={() => handleModalSwitch()}
                           >
                             <div>
-                              <Text>Connect Wallet</Text>
+                              <Text>Connect MetaMask Wallet</Text>
                               <Image
                                 src="/metamask.svg"
                                 width={20}
