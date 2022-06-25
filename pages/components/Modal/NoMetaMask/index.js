@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { useContext } from "react";
-import { GlobalContext } from "../../../../context/globalContext";
+import Link from "next/link";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const ModalContainer = styled.div`
@@ -112,7 +111,7 @@ const NoMetaMask = () => {
           <ModalBody>
             <Image src="/metamask.svg" width={75} height={75} />
             <Text>
-              Don't have metamask?{" "}
+              Don`&apos;'t have metamask?{" "}
               <Link href="https://metamask.io/">Download Here</Link>
             </Text>
             <CloseButton onClick={() => handleDisconnectModal()}>
