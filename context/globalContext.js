@@ -4,13 +4,16 @@ export const GlobalContext = React.createContext({
     showModal:false,
     showModalSwitch:()=>{},
     walletConnected:false,
-    walletConnectSwitch:()=>{}
+    walletConnectSwitch:()=>{},
+    showDisconnectModal:false,
+    showDisconnectModalSwitch:() => {},
 })
 
 
 const GlobalContextProvider = (props) => {
     const [modalState, setShowModalState] = useState(false);
     const [isWalletConnected,setIsWalletConnected] = useState(false);
+    const [diconnectModalState, setDisconnectState] = useState(false);
 
     const showModalHandler = () => {
         if(!modalState){
@@ -27,13 +30,24 @@ const GlobalContextProvider = (props) => {
             setIsWalletConnected(false);
         }
     }
+
+    const disconnectWalletHander = () =>{
+        if(!diconnectModalState){
+            setDisconnectState(true)
+        } else {
+            setDisconnectState(false)
+        }
+    }
+
     return(
         <GlobalContext.Provider
             value={{
                 showModal:modalState,
                 showModalSwitch:showModalHandler,
                 walletConnected:isWalletConnected,
-                walletConnectSwitch:walletStatusHandler
+                walletConnectSwitch:walletStatusHandler,
+                showDisconnectModal:diconnectModalState,
+                showDisconnectModalSwitch:disconnectWalletHander
             }}
         >
             {props.children}
