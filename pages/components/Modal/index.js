@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../../context/globalContext";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Image from "next/image";
+import Connecting from "./Connecting";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -21,6 +22,9 @@ const ModalContainer = styled.div`
   }
   .hide {
     display: none;
+  }
+  hr{
+    opacity:0.7;
   }
 `;
 
@@ -59,6 +63,7 @@ const Text = styled.h3`
   font-weight:${(props) => props.fontWeight || "400 !important"};
   font-size:14px;
 `;
+
 const ModalBody = styled.div`
   .wallet_option {
     display: flex;
@@ -89,14 +94,120 @@ const WalletOption = styled.div`
 `;
 
 const Modal = () => {
-  const { showModalSwitch } = useContext(GlobalContext);
+  const { showModalSwitch, walletConnectSwitch } = useContext(GlobalContext);
+  const [isMetaMaskWallet, setIsMetaMaskWallet] = useState(false);
+  const [error, setError] = useState("");
+  const [connecting, setConnecting] = useState(false);
+  const { ethereum } = window;
+
+  const networks = {
+    bsc: {
+      chainId: `0x${Number(56).toString(16)}`,
+      chainName: "Binance Smart Chain Mainnet",
+      nativeCurrency: {
+        name: "Binance Chain Native Token",
+        symbol: "BNB",
+        decimals: 18,
+      },
+      rpcUrls: [
+        "https://bsc-dataseed1.binance.org",
+        "https://bsc-dataseed2.binance.org",
+        "https://bsc-dataseed3.binance.org",
+        "https://bsc-dataseed4.binance.org",
+        "https://bsc-dataseed1.defibit.io",
+        "https://bsc-dataseed2.defibit.io",
+        "https://bsc-dataseed3.defibit.io",
+        "https://bsc-dataseed4.defibit.io",
+        "https://bsc-dataseed1.ninicoin.io",
+        "https://bsc-dataseed2.ninicoin.io",
+        "https://bsc-dataseed3.ninicoin.io",
+        "https://bsc-dataseed4.ninicoin.io",
+        "wss://bsc-ws-node.nariox.org",
+      ],
+      blockExplorerUrls: ["https://bscscan.com"],
+    },
+  };
+
+  const handleNetworkSwitch = async (networkName) => {
+    setError();
+    await changeNetwork({ networkName, setError });
+  };
+
+  const changeNetwork = async ({ networkName, setError }) => {
+    try {
+      if (!window.ethereum) throw new Error("No crypto wallet found");
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            ...networks[networkName],
+          },
+        ],
+      });
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   function closeModal() {
     showModalSwitch(false);
   }
 
+  const isMetaMaskInstalled = () => {
+    //Have to check the ethereum binding on the window object to see if it's installed
+    if (ethereum.isMetaMask === true) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  function checkForWallet() {
+    if (isMetaMaskInstalled === true) {
+      setIsMetaMaskWallet(true);
+    } else {
+      setIsMetaMaskWallet(false);
+    }
+  }
+
+  function networkChanged(chainId) {
+    console.log({ chainId });
+  }
+
+  useEffect(() => {
+    checkForWallet();
+    ethereum.on("chainChanged", networkChanged);
+
+    return () => {
+      ethereum.removeListener("chainChanged", networkChanged);
+    };
+  }, []);
+
+  async function connectMetaMask() {
+    try {
+      // Show Connecting Modal
+      setConnecting(true);
+      // Trigger Metamask Login
+      await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      // Change Global State
+      walletConnectSwitch(true);
+      // Close Modal
+      closeModal();
+    } catch (error) {
+      if(connecting){
+        setConnecting(false);
+      }
+      console.error(error);
+      walletConnectSwitch(false);
+      setError("Wallet Connection Failed");
+    }
+  }
+
   return (
     <>
+      {connecting ? <Connecting /> : null}
       <ModalContainer>
         <ModalContent>
           <ModalHeader>
@@ -109,10 +220,15 @@ const Modal = () => {
           <ModalBody>
             <div className="wallet_option">
               <Image src="/metamask.svg" height={20} width={20} />
-              <Text>Connect To Metamask</Text>
+              <Text>
+                {isMetaMaskWallet
+                  ? "Connect Metamask Wallet"
+                  : "Download & Install Metamask Wallet"}
+              </Text>
+              <Text color="red !important">{error}</Text>
             </div>
             <WalletMenu>
-              <WalletOption>
+              <WalletOption onClick={() => connectMetaMask()}>
                 <div className="network">
                   <Image
                     src="/bsc network.png"
@@ -122,7 +238,12 @@ const Modal = () => {
                   />
                   <Text>BSC Network</Text>
                 </div>
-                <Text fontWeight="300 !important">Add RPC</Text>
+                <Text
+                  fontWeight="300 !important"
+                  onClick={() => handleNetworkSwitch("bsc")}
+                >
+                  Add RPC
+                </Text>
               </WalletOption>
             </WalletMenu>
             <div className="wallet_option">
