@@ -172,6 +172,7 @@ const Modal = () => {
     return () => {
       ethereum.removeListener("chainChanged", networkChanged);
     };
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function connectMetaMask() {
@@ -210,7 +211,7 @@ const Modal = () => {
           </IconContainer>
           <ModalBody>
             <div className="wallet_option">
-              <Image src="/metamask.svg" height={20} width={20} />
+              <Image src="/metamask.svg" height={20} width={20} alt="Metamask Logo"/>
               <Text>
                 {isMetaMaskWallet
                   ? "Connect Metamask Wallet"
@@ -226,6 +227,7 @@ const Modal = () => {
                     height={20}
                     width={20}
                     layout="fixed"
+                    alt="BSC Network Logo"
                   />
                   <Text>BSC Network</Text>
                 </div>
@@ -238,7 +240,7 @@ const Modal = () => {
               </WalletOption>
             </WalletMenu>
             <div className="wallet_option">
-              <Image src="/trustwallet.svg" height={20} width={20} />
+              <Image src="/trustwallet.svg" height={20} width={20} alt="Trust Wallet Icon" />
               <Text>Connect To Trust Wallet</Text>
             </div>
             <WalletMenu>
@@ -249,6 +251,7 @@ const Modal = () => {
                     height={20}
                     width={20}
                     layout="fixed"
+                    alt="BSC Network Logo"
                   />
                   <Text>BSC Network</Text>
                 </div>
