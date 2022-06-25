@@ -80,6 +80,7 @@ const NavColumn = styled.div`
     background-color: #fff;
     position: absolute;
     top: 0%;
+    left:0%;
     width: 60%;
     height: 100%;
     z-index: 999;
