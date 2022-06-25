@@ -69,8 +69,8 @@ const Modal = () => {
             <ModalTitle>Connecting...</ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <Image src="/loading.gif" width={75} height={75} />
-            <Text>Don't have metamask? <Link href="https://metamask.io/">Download Here</Link></Text>
+            <Image src="/loading.gif" width={75} height={75} alt="Loading" />
+            <Text>MetaMask Not Installed? <Link href="https://metamask.io/">Download Here</Link></Text>
           </ModalBody>
         </ModalContent>
       </ModalContainer>
