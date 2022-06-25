@@ -323,7 +323,7 @@ const Bridge = () => {
         </FormContainer>
         {walletConnected ? (
           <>
-
+            <DepositBTN>Deposit BTT</DepositBTN>
           </>
         ) : (
           <>
