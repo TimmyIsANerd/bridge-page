@@ -153,17 +153,8 @@ const Modal = () => {
     showModalSwitch(false);
   }
 
-  const isMetaMaskInstalled = () => {
-    //Have to check the ethereum binding on the window object to see if it's installed
-    if (ethereum.isMetaMask === true) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   function checkForWallet() {
-    if (isMetaMaskInstalled === true) {
+    if(ethereum.isMetaMask){
       setIsMetaMaskWallet(true);
     } else {
       setIsMetaMaskWallet(false);
@@ -176,8 +167,8 @@ const Modal = () => {
 
   useEffect(() => {
     checkForWallet();
+    console.log(checkForWallet())
     ethereum.on("chainChanged", networkChanged);
-
     return () => {
       ethereum.removeListener("chainChanged", networkChanged);
     };
