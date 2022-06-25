@@ -225,7 +225,6 @@ const DepositBTN = styled.button`
 `
 
 const Bridge = () => {
-  const { ethereum } = window;
   const [isError, setIsError] = useState(false);
   const [showConnectOption, setShowConnectOption] = useState(false);
   const { walletConnected, showModalSwitch } = useContext(GlobalContext);
