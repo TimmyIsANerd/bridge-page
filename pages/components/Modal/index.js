@@ -86,8 +86,10 @@ const WalletOption = styled.div`
   border-radius: 10px;
   cursor: pointer;
   .network {
+    width:100%;
     display: flex;
     flex-direction: row;
+    justify-content:center;
     align-items: center;
     column-gap: 1rem;
   }
@@ -210,52 +212,32 @@ const Modal = () => {
             <AiOutlineCloseCircle size={20} onClick={() => closeModal()} />
           </IconContainer>
           <ModalBody>
-            <div className="wallet_option">
-              <Image src="/metamask.svg" height={20} width={20} alt="Metamask Logo"/>
-              <Text>
-                {isMetaMaskWallet
-                  ? "Connect Metamask Wallet"
-                  : "Download & Install Metamask Wallet"}
-              </Text>
-              <Text color="red !important">{error}</Text>
-            </div>
             <WalletMenu>
               <WalletOption onClick={() => connectMetaMask()}>
                 <div className="network">
                   <Image
-                    src="/bsc network.png"
+                    src="/metamask.svg"
                     height={20}
                     width={20}
                     layout="fixed"
                     alt="BSC Network Logo"
                   />
-                  <Text>BSC Network</Text>
+                  <Text>Connect Metamask Wallet</Text>
                 </div>
-                <Text
-                  fontWeight="300 !important"
-                  onClick={() => handleNetworkSwitch("bsc")}
-                >
-                  Add RPC
-                </Text>
               </WalletOption>
             </WalletMenu>
-            <div className="wallet_option">
-              <Image src="/trustwallet.svg" height={20} width={20} alt="Trust Wallet Icon" />
-              <Text>Connect To Trust Wallet</Text>
-            </div>
             <WalletMenu>
               <WalletOption>
                 <div className="network">
                   <Image
-                    src="/bsc network.png"
+                    src="/trustwallet.svg"
                     height={20}
                     width={20}
                     layout="fixed"
                     alt="BSC Network Logo"
                   />
-                  <Text>BSC Network</Text>
+                  <Text>Connect Trust Wallet</Text>
                 </div>
-                <Text fontWeight="300 !important">Add RPC</Text>
               </WalletOption>
             </WalletMenu>
           </ModalBody>
