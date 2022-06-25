@@ -111,7 +111,7 @@ const NoMetaMask = () => {
           <ModalBody>
             <Image src="/metamask.svg" width={75} height={75} />
             <Text>
-              Don`&apos;'t have metamask?{" "}
+              Metamask Not Installed?
               <Link href="https://metamask.io/">Download Here</Link>
             </Text>
             <CloseButton onClick={() => handleDisconnectModal()}>
