@@ -308,6 +308,7 @@ const Bridge = () => {
                                 src="/metamask.svg"
                                 width={20}
                                 height={20}
+                                alt="Metamask Logo"
                               />
                             </div>
                           </ConnectWalletOption>
