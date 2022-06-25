@@ -171,7 +171,7 @@ const ConnectWalletDropdown = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height:50px;
+  height: 50px;
   z-index: 99;
   :hover {
     cursor: pointer;
@@ -199,13 +199,39 @@ const ConnectWalletOption = styled.div`
   }
 `;
 
+const DepositBTN = styled.button`
+  width: 100%;
+  height: ${(props) => props.height || "40px"};
+  background-color: ${(props) => props.backgroundColor || "#101010"};
+  border: none !important;
+  border-radius: 9999px;
+  outline: none !important;
+  text-align: center;
+  font-size: ${(props) => props.fontSize || "16px"};
+  color: ${(props) => props.color || "#fff"};
+  vertical-align: middle;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: ${(props) => props.padding || "0 18px"};
+  transition: 0.5s;
+  :hover {
+    cursor: pointer;
+    background-color: ${(props) => props.hoverBackgroundColor || "#4500a0"};
+  }
+  :disabled{
+    background-color:grey;
+  }
+`
+
 const Bridge = () => {
+  const { ethereum } = window;
   const [isError, setIsError] = useState(false);
   const [showConnectOption, setShowConnectOption] = useState(false);
-  const { walletConnected,showModalSwitch } = useContext(GlobalContext);
+  const { walletConnected, showModalSwitch } = useContext(GlobalContext);
 
   function showOption() {
-    setShowConnectOption(!showConnectOption); 
+    setShowConnectOption(!showConnectOption);
   }
 
   function handleModalSwitch() {
@@ -228,7 +254,7 @@ const Bridge = () => {
                 <DropdownContainer>
                   {walletConnected ? (
                     <DropdownHeader>
-                      <Text>Connect Wallet First</Text>
+                      <Text>Select Token</Text>
                     </DropdownHeader>
                   ) : (
                     <DropdownHeader cursor="not-allowed">
@@ -265,9 +291,7 @@ const Bridge = () => {
                   />
                 ) : (
                   <>
-                    <ConnectWalletDropdown
-                      onClick={() => showOption()}
-                    >
+                    <ConnectWalletDropdown onClick={() => showOption()}>
                       <AddressInput
                         type="text"
                         disabled
@@ -276,7 +300,9 @@ const Bridge = () => {
                       />
                       {showConnectOption ? (
                         <>
-                          <ConnectWalletOption onClick={() => handleModalSwitch()}>
+                          <ConnectWalletOption
+                            onClick={() => handleModalSwitch()}
+                          >
                             <div>
                               <Text>Connect Wallet</Text>
                               <Image
@@ -295,9 +321,17 @@ const Bridge = () => {
             </FormGroup>
           </Form>
         </FormContainer>
-        <ButtonContainer>
-          <Button height="60px" padding="4px 16px" />
-        </ButtonContainer>
+        {walletConnected ? (
+          <>
+
+          </>
+        ) : (
+          <>
+            <ButtonContainer>
+              <Button height="60px" padding="4px 16px" />
+            </ButtonContainer>
+          </>
+        )}
       </Container>
     </>
   );
