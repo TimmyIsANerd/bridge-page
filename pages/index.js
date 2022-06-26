@@ -19,23 +19,21 @@ const BridgeContainer = styled.div`
 `;
 
 function Home() {
-  const { showModal, showDisconnectModal, walletConnectSwitch } =
-    useContext(GlobalContext);
+  const { showModal, showDisconnectModal, walletConnectSwitch } = useContext(GlobalContext);
   const { ethereum } = window;
 
   // Check if Metamask is connected
   useEffect(() => {
-    (async function checkMetamaskConnection(){
-      const accounts = await ethereum.request({ method: 'eth_accounts' })
-      if(accounts.length !== 0){
+    (async () => {
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      console.log(accounts)
+      if (accounts.length !== 0) {
         walletConnectSwitch(true);
       } else {
         walletConnectSwitch(false);
-  
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ethereum]);
 
   // Check if Trust Wallet is Connected
   // Create a connector
