@@ -256,7 +256,7 @@ const Bridge = () => {
                     <AddressInput
                       type="text"
                       id="walletAddress"
-                      placeholder="Connect Wallet First"
+                      placeholder="Enter Wallet Address"
                     />
                   </>
                 ) : (
@@ -264,7 +264,7 @@ const Bridge = () => {
                     <AddressInput
                       type="text"
                       id="walletAddress"
-                      placeholder="Enter Wallet Address"
+                      placeholder="Connect Wallet First"
                       disabled
                     />
                   </>
