@@ -21,6 +21,28 @@ const BridgeContainer = styled.div`
 function Home() {
   const { showModal, showDisconnectModal, walletConnectSwitch } =
     useContext(GlobalContext);
+  const { ethereum } = window;
+
+  // Check if Metamask is connected
+  useEffect(() => {
+    (async function checkMetamaskConnection(){
+      const accounts = await ethereum.request({ method: 'eth_accounts' })
+      if(accounts.length !== 0){
+        walletConnectSwitch(true);
+      } else {
+        walletConnectSwitch(false);
+  
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Check if Trust Wallet is Connected
+  // Create a connector
+  const connector = new WalletConnect({
+    bridge: "https://bridge.walletconnect.org", // Required
+    qrcodeModal: QRCodeModal,
+  });
 
   return (
     <>
