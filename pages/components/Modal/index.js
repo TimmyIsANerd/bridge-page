@@ -160,20 +160,6 @@ const Modal = () => {
     showModalSwitch(false);
   }
 
-  function checkForWallet() {
-    if (ethereum.isMetaMask) {
-      setIsMetaMaskWallet(true);
-    } else {
-      setIsMetaMaskWallet(false);
-    }
-  }
-
-  useEffect(() => {
-    checkForWallet();
-    console.log(checkForWallet());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   async function connectMetaMask() {
     try {
       // Show Connecting Modal
