@@ -1,3 +1,5 @@
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "../context/globalContext";
 import Bridge from "./components/Bridge";
@@ -17,21 +19,8 @@ const BridgeContainer = styled.div`
 `;
 
 function Home() {
-  // const { ethereum } = window;
-  // const { walletConnected } = useContext(GlobalContext);
-
-  // function CheckEthereum() {
-  //   if (ethereum) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-  // useEffect(() => {
-    
-  // }, []);
-  const { showModal, showDisconnectModal } = useContext(GlobalContext);
+  const { showModal, showDisconnectModal, walletConnectSwitch } =
+    useContext(GlobalContext);
 
   return (
     <>
