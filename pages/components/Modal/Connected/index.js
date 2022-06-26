@@ -1,9 +1,10 @@
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 import styled from "styled-components";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "../../../../context/globalContext";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -88,19 +89,44 @@ const IconContainer = styled.div`
   }
 `;
 
-
 const Connected = () => {
-  const { showDisconnectModalSwitch,walletConnectSwitch } = useContext(GlobalContext);
+  const { showDisconnectModalSwitch, walletConnectSwitch } =
+    useContext(GlobalContext);
 
-  function handleDisconnectModal(){
+  function handleDisconnectModal() {
     walletConnectSwitch(false);
     showDisconnectModalSwitch(false);
   }
 
-  function closeModal(){
-    showDisconnectModalSwitch(false)
+  function closeModal() {
+    showDisconnectModalSwitch(false);
   }
 
+  const connector = new WalletConnect({
+    bridge: "https://bridge.walletconnect.org", // Required
+    qrcodeModal: QRCodeModal,
+  });
+
+  function disconnectTrustWallet() {
+    console.log('Disconnect from Trust Wallet')
+    // Check if connection is already established
+    if (connector.connected) {
+      connector.on("disconnect", (error, payload) => {
+        // Delete connector
+        handleDisconnectModal();
+        if (error) {
+          throw error;
+        }
+        // Change Global State
+        walletConnectSwitch(false);
+        console.log("log out")
+      });
+    }
+  }
+
+  useEffect(() =>{
+    
+  },[connector.connected])
 
   return (
     <>
@@ -113,8 +139,33 @@ const Connected = () => {
             <AiOutlineCloseCircle size={20} onClick={() => closeModal()} />
           </IconContainer>
           <ModalBody>
-            <Image src="/metamask.svg" width={75} height={75} alt="Metamask Logo" />
-            <DisconnectButton onClick={() => handleDisconnectModal()}>Log Out</DisconnectButton>
+            <div className="wallet_icons">
+              <Image
+                src="/metamask.svg"
+                width={75}
+                height={75}
+                alt="Metamask Logo"
+              />
+              <Image
+                src="/trustwallet.svg"
+                width={75}
+                height={75}
+                alt="Metamask Logo"
+              />
+            </div>
+            {connector.connected ? (
+              <>
+                <DisconnectButton onClick={() => disconnectTrustWallet()}>
+                  Log Out
+                </DisconnectButton>
+              </>
+            ) : (
+              <>
+                <DisconnectButton onClick={() => handleDisconnectModal()}>
+                  Log Out
+                </DisconnectButton>
+              </>
+            )}
           </ModalBody>
         </ModalContent>
       </ModalContainer>
