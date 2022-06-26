@@ -19,28 +19,8 @@ const BridgeContainer = styled.div`
 `;
 
 function Home() {
-  const { showModal, showDisconnectModal, walletConnectSwitch } = useContext(GlobalContext);
-  const { ethereum } = window;
+  const { showModal, showDisconnectModal } = useContext(GlobalContext);
 
-  // Check if Metamask is connected
-  useEffect(() => {
-    (async () => {
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-      console.log(accounts)
-      if (accounts.length !== 0) {
-        walletConnectSwitch(true);
-      } else {
-        walletConnectSwitch(false);
-      }
-    })();
-  }, [ethereum]);
-
-  // Check if Trust Wallet is Connected
-  // Create a connector
-  const connector = new WalletConnect({
-    bridge: "https://bridge.walletconnect.org", // Required
-    qrcodeModal: QRCodeModal,
-  });
 
   return (
     <>
