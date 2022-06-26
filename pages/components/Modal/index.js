@@ -1,3 +1,5 @@
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../../context/globalContext";
@@ -15,7 +17,7 @@ const ModalContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   .show {
     display: block;
@@ -23,8 +25,8 @@ const ModalContainer = styled.div`
   .hide {
     display: none;
   }
-  hr{
-    opacity:0.7;
+  hr {
+    opacity: 0.7;
   }
 `;
 
@@ -86,10 +88,10 @@ const WalletOption = styled.div`
   border-radius: 10px;
   cursor: pointer;
   .network {
-    width:100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     column-gap: 1rem;
   }
@@ -102,79 +104,74 @@ const Modal = () => {
   const [connecting, setConnecting] = useState(false);
   const { ethereum } = window;
 
-  const networks = {
-    bsc: {
-      chainId: `0x${Number(56).toString(16)}`,
-      chainName: "Binance Smart Chain Mainnet",
-      nativeCurrency: {
-        name: "Binance Chain Native Token",
-        symbol: "BNB",
-        decimals: 18,
-      },
-      rpcUrls: [
-        "https://bsc-dataseed1.binance.org",
-        "https://bsc-dataseed2.binance.org",
-        "https://bsc-dataseed3.binance.org",
-        "https://bsc-dataseed4.binance.org",
-        "https://bsc-dataseed1.defibit.io",
-        "https://bsc-dataseed2.defibit.io",
-        "https://bsc-dataseed3.defibit.io",
-        "https://bsc-dataseed4.defibit.io",
-        "https://bsc-dataseed1.ninicoin.io",
-        "https://bsc-dataseed2.ninicoin.io",
-        "https://bsc-dataseed3.ninicoin.io",
-        "https://bsc-dataseed4.ninicoin.io",
-        "wss://bsc-ws-node.nariox.org",
-      ],
-      blockExplorerUrls: ["https://bscscan.com"],
-    },
-  };
+  function connectTrustWallet() {
+    // Create a connector
+    const connector = new WalletConnect({
+      bridge: "https://bridge.walletconnect.org", // Required
+      qrcodeModal: QRCodeModal,
+    });
 
-  const handleNetworkSwitch = async (networkName) => {
-    setError();
-    await changeNetwork({ networkName, setError });
-  };
-
-  const changeNetwork = async ({ networkName, setError }) => {
-    try {
-      if (!window.ethereum) throw new Error("No crypto wallet found");
-      await window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            ...networks[networkName],
-          },
-        ],
-      });
-    } catch (err) {
-      setError(err.message);
+    // Check if connection is already established
+    if (!connector.connected) {
+      // create new session
+      connector.createSession();
     }
-  };
+
+    // Subscribe to connection events
+    connector.on("connect", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      // Get provided accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+      // Change Global State
+      walletConnectSwitch(true);
+
+      // Close Modal
+      closeModal();
+    });
+
+    connector.on("session_update", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      // Get updated accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+    });
+  }
+
+  function disconnectTrustWallet() {
+    connector.on("disconnect", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      // Delete connector
+      // Close Modal
+      closeModal();
+      // Change Global State
+      walletConnectSwitch(false);
+    });
+  }
 
   function closeModal() {
     showModalSwitch(false);
   }
 
   function checkForWallet() {
-    if(ethereum.isMetaMask){
+    if (ethereum.isMetaMask) {
       setIsMetaMaskWallet(true);
     } else {
       setIsMetaMaskWallet(false);
     }
   }
 
-  function networkChanged(chainId) {
-    console.log({ chainId });
-  }
-
   useEffect(() => {
     checkForWallet();
-    console.log(checkForWallet())
-    ethereum.on("chainChanged", networkChanged);
-    return () => {
-      ethereum.removeListener("chainChanged", networkChanged);
-    };
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log(checkForWallet());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function connectMetaMask() {
@@ -190,7 +187,7 @@ const Modal = () => {
       // Close Modal
       closeModal();
     } catch (error) {
-      if(connecting){
+      if (connecting) {
         setConnecting(false);
       }
       console.error(error);
@@ -220,21 +217,25 @@ const Modal = () => {
                     height={20}
                     width={20}
                     layout="fixed"
-                    alt="BSC Network Logo"
+                    alt="Metamask Logo"
                   />
                   <Text>Connect Metamask Wallet</Text>
                 </div>
               </WalletOption>
             </WalletMenu>
             <WalletMenu>
-              <WalletOption>
+              <WalletOption
+                onClick={() => {
+                  connectTrustWallet();
+                }}
+              >
                 <div className="network">
                   <Image
                     src="/trustwallet.svg"
                     height={20}
                     width={20}
                     layout="fixed"
-                    alt="BSC Network Logo"
+                    alt="Trust Wallet Logo"
                   />
                   <Text>Connect Trust Wallet</Text>
                 </div>
