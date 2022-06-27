@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { GlobalContext } from "../../../../context/globalContext";
 import styled from "styled-components";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -60,10 +62,17 @@ const ModalBody = styled.div`
   }
 `;
 
-const Modal = () => {
+const Modal = ({visibility}) => {
+  const {showConnectingModal} = useContext(GlobalContext);
+
+  function closeModal() {
+    showConnectingModal(false);
+  }
+
+
   return (
     <>
-      <ModalContainer>
+      <ModalContainer onClick={() => closeModal()}>
         <ModalContent>
           <ModalHeader>
             <ModalTitle>Connecting...</ModalTitle>
