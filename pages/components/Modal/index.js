@@ -1,7 +1,7 @@
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../../../context/globalContext";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Image from "next/image";
@@ -98,10 +98,8 @@ const WalletOption = styled.div`
 `;
 
 const Modal = () => {
-  const { showModalSwitch, walletConnectSwitch } = useContext(GlobalContext);
-  const [isMetaMaskWallet, setIsMetaMaskWallet] = useState(false);
+  const { showModalSwitch, walletConnectSwitch,connectingModal,showConnectingModal } = useContext(GlobalContext);
   const [error, setError] = useState("");
-  const [connecting, setConnecting] = useState(false);
   const { ethereum } = window;
 
   function connectTrustWallet() {
@@ -163,7 +161,7 @@ const Modal = () => {
   async function connectMetaMask() {
     try {
       // Show Connecting Modal
-      setConnecting(true);
+      showConnectingModal(true);
       // Trigger Metamask Login
       await ethereum.request({
         method: "eth_requestAccounts",
@@ -173,8 +171,8 @@ const Modal = () => {
       // Close Modal
       closeModal();
     } catch (error) {
-      if (connecting) {
-        setConnecting(false);
+      if (connectingModal) {
+        showConnectingModal(false);
       }
       console.error(error);
       walletConnectSwitch(false);
@@ -184,7 +182,7 @@ const Modal = () => {
 
   return (
     <>
-      {connecting ? <Connecting /> : null}
+      {connectingModal ? <Connecting/> : null }
       <ModalContainer>
         <ModalContent>
           <ModalHeader>
