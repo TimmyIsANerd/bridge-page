@@ -171,11 +171,14 @@ const Modal = () => {
       // Close Modal
       closeModal();
     } catch (error) {
+      if(error){
+        walletConnectSwitch(false);
+      }
       if (connectingModal) {
         showConnectingModal(false);
       }
-      console.error(error);
       walletConnectSwitch(false);
+      console.error(error);
       setError("Wallet Connection Failed");
     }
   }
