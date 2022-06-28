@@ -15,15 +15,7 @@ const NavbarContainer = styled.div`
   flex-direction: row !important;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 480px) {
-    .show_nav {
-      display: flex;
-    }
-    .hide {
-      display: none;
-    }
-  }
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
     .show_nav {
       display: flex;
     }
