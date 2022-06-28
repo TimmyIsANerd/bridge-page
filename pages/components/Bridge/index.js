@@ -3,6 +3,20 @@ import styled from "styled-components";
 import { GlobalContext } from "../../../context/globalContext";
 import Button from "../Button/Connect";
 import Image from "next/image";
+import {
+  TokenSearchContainer,
+  TokenSearchInput,
+  TokenListContainer,
+  TokenList,
+  TokenListItem,
+  TokenFormInputWrap,
+  TokenName,
+  TokenContractAddress,
+} from "../Dropdown/TokenSearch";
+import Link from "next/link";
+
+import { GiMagnifyingGlass } from "react-icons/gi";
+import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 
 const Container = styled.div`
   border-radius: 26px;
@@ -21,7 +35,7 @@ const Container = styled.div`
 
 const Heading = styled.h3`
   font-weight: 500;
-  font-size:25px;
+  font-size: 25px;
 `;
 
 const ButtonContainer = styled.div`
@@ -35,7 +49,7 @@ const Form = styled.form``;
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0;
+  margin: 0.8rem 0;
   row-gap: 0.5rem;
 `;
 
@@ -121,7 +135,7 @@ const DropdownListContainer = styled.div`
   backdrop-filter: blur(19px);
   border-radius: 10px;
   overflow: hidden;
-  width: 15.5em;
+  width: 40%;
   position: absolute;
   /* top: 10%; */
   margin-top: 1.5rem;
@@ -225,6 +239,147 @@ const DepositBTN = styled.button`
   }
 `;
 
+const TokenDropDownHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid rgba(194, 201, 209, 0.5);
+  background-color: #f5f7fb;
+  div {
+    height: 45px;
+    backdrop-filter: blur(1px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 20px;
+    column-gap: 0.5rem;
+  }
+`;
+
+const SelectedTokenSymbol = styled.p`
+  font-weight: bold;
+`;
+
+const SelectedTokenName = styled.p`
+  color: #91979d;
+`;
+
+const Arrow = styled.div`
+  flex-direction: row;
+  align-self: center;
+`;
+
+const tokenInformation = [
+  {
+    tokenSymbol: "BNB",
+    tokenIconURL: "/btt.png",
+    tokenName: "Binance Coin",
+    tokenContractAddress: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
+  },
+  {
+    tokenSymbol: "BTC",
+    tokenIconURL: "/btt.png",
+    tokenName: "Bitcoin",
+    tokenContractAddress: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
+  },
+];
+
+const TokenDropDownComponent = () => {
+  const [showTokenList, setShowTokenList] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  function toggleDropDown() {
+    setShowTokenList(!showTokenList);
+  }
+
+  const optionClicked = (value) => () => {
+    setShowTokenList(!showTokenList);
+    setSelectedOption(value);
+    console.log(selectedOption);
+  };
+
+  return (
+    <>
+      <TokenDropDownHeader onClick={() => toggleDropDown()}>
+        <div>
+          <Image
+            src={selectedOption ? selectedOption.tokenIconURL : "/btt.png"}
+            width={35}
+            height={35}
+          />
+          <SelectedTokenSymbol>
+            {selectedOption ? selectedOption.tokenSymbol : "BTT"}
+          </SelectedTokenSymbol>
+          <SelectedTokenName>
+            {selectedOption ? selectedOption.tokenName : "BitTorrent"}
+          </SelectedTokenName>
+        </div>
+        <Arrow>{showTokenList ? <AiOutlineDown /> : <AiOutlineUp />}</Arrow>
+      </TokenDropDownHeader>
+      {showTokenList ? (
+        <TokenSearchContainer>
+          <TokenFormInputWrap>
+            <GiMagnifyingGlass />
+            <TokenSearchInput
+              type="text"
+              placeholder="Search by Token Name/Symbol/Contract"
+            />
+          </TokenFormInputWrap>
+          <TokenListContainer>
+            {tokenInformation.map((token) => {
+              return (
+                <>
+                  <TokenList onClick={optionClicked(token)}>
+                    <TokenListItem>
+                      <div className="left_side">
+                        <div>
+                          <TokenIcon
+                            src={token.tokenIconURL}
+                            width={100}
+                            height={100}
+                            layout="fill"
+                          />
+                        </div>
+                        <div>
+                          <TokenName style={{ fontWeight: "bold" }}>
+                            {token.tokenSymbol}
+                          </TokenName>
+                          <TokenName>
+                            {token.tokenName}
+                          </TokenName>
+                        </div>
+                      </div>
+                      <div className="tokenData">
+                        <div style={{ float: "right" }}>
+                          0
+                        </div>
+                        <Link
+                          href={
+                            token.tokenContractAddress
+                          }
+                          target="_blank"
+                        >
+                          <TokenContractAddress>
+                            {token.tokenContractAddress}
+                          </TokenContractAddress>
+                        </Link>
+                      </div>
+                    </TokenListItem>
+                  </TokenList>
+                </>
+              );
+            })}
+          </TokenListContainer>
+        </TokenSearchContainer>
+      ) : null}
+    </>
+  );
+};
+
 const Bridge = () => {
   const [isError, setIsError] = useState(false);
   const [showConnectOption, setShowConnectOption] = useState(false);
@@ -279,9 +434,9 @@ const Bridge = () => {
               <InputWrap>
                 <DropdownContainer>
                   {walletConnected ? (
-                    <DropdownHeader>
-                      <Text>Select Token</Text>
-                    </DropdownHeader>
+                    <>
+                      <TokenDropDownComponent />
+                    </>
                   ) : (
                     <DropdownHeader cursor="not-allowed">
                       <Text>Connect Wallet First</Text>
