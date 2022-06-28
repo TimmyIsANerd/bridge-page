@@ -310,6 +310,7 @@ const TokenDropDownComponent = () => {
             src={selectedOption ? selectedOption.tokenIconURL : "/btt.png"}
             width={35}
             height={35}
+            alt={selectedOption.tokenName}
           />
           <SelectedTokenSymbol>
             {selectedOption ? selectedOption.tokenSymbol : "BTT"}
