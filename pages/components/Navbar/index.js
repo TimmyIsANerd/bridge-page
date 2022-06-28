@@ -23,6 +23,14 @@ const NavbarContainer = styled.div`
       display: none;
     }
   }
+  @media (min-width: 768px) {
+    .show_nav {
+      display: flex;
+    }
+    .hide {
+      display: none;
+    }
+  }
 `;
 
 const NavLogo = styled.div``;
@@ -47,7 +55,7 @@ const NavLinkContainer = styled.div`
     color: #fff;
     border-radius: 30px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     ul {
       flex-direction: column;
       align-items: center;
@@ -75,7 +83,7 @@ const NavColumn = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     border-radius: 0px;
     background-color: #fff;
     position: absolute;
@@ -95,7 +103,7 @@ const ConnectButtonContainer = styled.div`
   flex-direction: row;
   align-items: center;
   column-gap: 1rem;
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     justify-content: center;
     flex-direction: column;
   }
@@ -106,7 +114,7 @@ const Menu = styled.div`
   :hover {
     cursor: pointer;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     display: block;
   }
 `;
