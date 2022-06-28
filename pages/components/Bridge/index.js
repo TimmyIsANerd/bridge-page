@@ -12,7 +12,7 @@ import {
   TokenFormInputWrap,
   TokenName,
   TokenContractAddress,
-} from "../Dropdown/TokenSearch";
+} from "../../../styles/Dropdown.styled";
 import Link from "next/link";
 
 import { GiMagnifyingGlass } from "react-icons/gi";
@@ -310,7 +310,7 @@ const TokenDropDownComponent = () => {
             src={selectedOption ? selectedOption.tokenIconURL : "/btt.png"}
             width={35}
             height={35}
-            alt={selectedOption.tokenName}
+            alt={selectedOption ? selectedOption.tokenName : "BTT"}
           />
           <SelectedTokenSymbol>
             {selectedOption ? selectedOption.tokenSymbol : "BTT"}
@@ -358,16 +358,16 @@ const TokenDropDownComponent = () => {
                         <div style={{ float: "right" }}>
                           0
                         </div>
+                          <TokenContractAddress>
                         <Link
                           href={
                             token.tokenContractAddress
                           }
                           target="_blank"
                         >
-                          <TokenContractAddress>
                             {token.tokenContractAddress}
-                          </TokenContractAddress>
                         </Link>
+                          </TokenContractAddress>
                       </div>
                     </TokenListItem>
                   </TokenList>
