@@ -334,7 +334,7 @@ const TokenDropDownComponent = () => {
             {tokenInformation.map((token) => {
               return (
                 <>
-                  <TokenList onClick={optionClicked(token)}>
+                  <TokenList onClick={optionClicked(token)} key={Math.random()}>
                     <TokenListItem>
                       <div className="left_side">
                         <div>
